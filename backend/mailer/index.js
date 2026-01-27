@@ -16,8 +16,18 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+console.log('User:', process.env.MAIL_USER || 'Not set');
+console.log('Pass:', process.env.MAIL_PASS ? 'Set (hidden)' : 'Not set');
+
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log('Server connection error:', error);
+  } else {
+    console.log('Server is ready to take our messages');
+  }
+});
+
 app.post('/send-email', async (req, res) => {
-   console.log('Received email request:', req.body);
   const { name, email, message } = req.body;
 
   try {
