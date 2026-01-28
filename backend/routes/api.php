@@ -6,4 +6,5 @@ use App\Http\Controllers\ContactController;
 
 Route::middleware('api')->group(function () {
     Route::post('/contact', [ContactController::class, 'send']);
+    Route::post('/login', [AuthController::class, 'login']);
 });
