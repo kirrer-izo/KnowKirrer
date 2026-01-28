@@ -1,0 +1,22 @@
+            <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label small fw-medium text-secondary">Email</label>
+                    <input type="email" class="form-control" id="email" required email [(ngModel)]="formData.email"
+                        name="email" placeholder="name@example.com">
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label small fw-medium text-secondary">Password</label>
+                    <input type="password" class="form-control" id="password" required password [(ngModel)]="formData.password"
+                        name="password" placeholder="Enter your password">
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-light" (click)="onClose()">Cancel</button>
+                    <button type="submit" class="btn btn-dark px-4" [disabled]="!contactForm.form.valid || isLoading">
+                        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
+                            aria-hidden="true"></span>
+                        {{ isLoading ? 'Sending...' : 'Send Message' }}
+                    </button>
+                </div>
+            </form>
