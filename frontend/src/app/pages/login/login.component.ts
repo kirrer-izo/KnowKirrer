@@ -29,7 +29,7 @@ export class LoginComponent {
     next: (response) => {
       //Success! Redirect to dashboard
 
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/']);
     },
     error: (error) => {
       // failed invalid credentials
