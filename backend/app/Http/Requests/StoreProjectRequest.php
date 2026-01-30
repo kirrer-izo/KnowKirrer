@@ -11,11 +11,6 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = Auth::user();
-
-        if (!$user) {
-            return false;
-        }
         return true;
     }
 
@@ -28,8 +23,8 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'goal' => 'required|string|max:1000',
+            'description' => 'nullable|string|max:1000',
+            'goal' => 'nullable|string|max:1000',
             'source_code' => 'required|url',
             'live_demo' => 'nullable|url',
         ];
