@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class LandingPage extends Model
 {
@@ -13,8 +15,8 @@ class LandingPage extends Model
 
     ];
 
-    public function techStacks(): BelongsToMany
+    public function techStacks(): MorphToMany
     {
-        return $this->belongsToMany(TechStack::class);
+        return $this->morphToMany(TechStack::class, 'stackable', 'tech_stackables');
     }
 }

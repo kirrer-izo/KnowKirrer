@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('landing_page_tech_stack', function (Blueprint $table) {
+        Schema::create('tech_stackables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('landing_page_id')->constrained()->cascadeOnDelete();
             $table->foreignId('tech_stack_id')->constrained()->cascadeOnDelete();
+
+            $table->morphs('stackable');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('landing_page_tech_stack');
+        Schema::dropIfExists('tech_stackables');
     }
 };
