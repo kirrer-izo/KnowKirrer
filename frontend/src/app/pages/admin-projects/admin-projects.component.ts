@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProjectService } from '../../services/project.service';
-import { RouterModule } from '@angular/router';
+import { ProjectService } from '../admin-projects/services/project';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-projects',
@@ -14,23 +14,14 @@ import { RouterModule } from '@angular/router';
 export class AdminProjectsComponent implements OnInit {
   //services
   private projectService = inject(ProjectService);
-  private fb = inject(FormBuilder);
+  private router = inject(Router);
   private cd = inject(ChangeDetectorRef);
 
   //state
   projects: any[] = [];
-  projectForm: FormGroup;
+  selectedProject: any = null;
   isSubmitting = false;
 
-  constructor() {
-    this.projectForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['',],
-      goal: [''],
-      source_code: ['', Validators.required],
-      live_demo: ['']
-    });
-  }
 
   ngOnInit(): void {
     this.loadProjects();
@@ -46,24 +37,33 @@ export class AdminProjectsComponent implements OnInit {
     })
   }
 
-  onSubmit() {
-    if (this.projectForm.valid) {
-      this.isSubmitting = true;
+  onEditProject(project: any) {
+    this.selectedProject = project;
+  }
 
-      this.projectService.createProject(this.projectForm.value).subscribe({
-        next: (res) => {
-          alert('Project Created!');
-          this.projectForm.reset();
+  onViewProject(id: number) {
+    this.router.navigate(['/projects', id])
+  }
+
+  onSaveProject(project: any) {
+    this.isSubmitting = true;
+
+    const obs = project.id
+      ? this.projectService.editProject(project)
+      : this.projectService.createProject(project);
+
+      obs.subscribe({
+        next: () => {
+          this.selectedProject = null;
           this.isSubmitting = false;
           this.loadProjects();
         },
         error: (err) => {
           console.error(err);
-          alert('Error creating project');
+          alert('Failed to save project');
           this.isSubmitting = false;
         }
       });
-    }
   }
 
   deleteProject(id: number) {
