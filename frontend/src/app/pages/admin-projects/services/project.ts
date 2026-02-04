@@ -6,7 +6,7 @@ import { inject, Injectable } from '@angular/core';
 })
 export class ProjectService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api/projects';
+  private apiUrl = 'http://localhost:8000/api';
 
   private getHeaders() {
     const token = localStorage.getItem('auth_token');
@@ -18,24 +18,28 @@ export class ProjectService {
     }
   }
 
-    getProjects() {
-    return this.http.get(`${this.apiUrl}`);
-    }
+  getProjects() {
+    return this.http.get(`${this.apiUrl}/projects`);
+  }
+
+  getTechStacks() {
+    return this.http.get(`${this.apiUrl}/techstacks`)
+  }
 
   getProject(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    return this.http.get(`${this.apiUrl}/projects/${id}`);
   }
 
   createProject(project: any) {
-    return this.http.post(`${this.apiUrl}`, project, this.getHeaders());
+    return this.http.post(`${this.apiUrl}/projects`, project, this.getHeaders());
   }
 
   editProject(project: any) {
-    return this.http.put(`${this.apiUrl}/${project.id}`, project, this.getHeaders());
+    return this.http.put(`${this.apiUrl}/projects/${project.id}`, project, this.getHeaders());
   }
 
   deleteProject(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`, this.getHeaders());
+    return this.http.delete(`${this.apiUrl}/projects/${id}`, this.getHeaders());
   }
   
 }

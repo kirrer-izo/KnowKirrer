@@ -4,6 +4,7 @@
   <h4 class="mb-3">{{selectedProject ? 'Edit Project' : 'Add New Project'}}</h4>
   <app-project-form
     [project]="selectedProject"
+    [techStacks]="techStacks"
     [isSubmitting]="isSubmitting"
     (save)="onSaveProject($event)">
   </app-project-form>

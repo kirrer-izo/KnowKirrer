@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class ProjectForm {
   @Input() project: any = null;
+  @Input() techStacks: any[] = [];
   @Input() isSubmitting = false;
   @Output() save = new EventEmitter<any>();
 
@@ -22,7 +23,8 @@ export class ProjectForm {
       description: ['',],
       goal: [''],
       source_code: ['', Validators.required],
-      live_demo: ['']
+      live_demo: [''],
+      tech_stacks: [[]]
     });
   }
 

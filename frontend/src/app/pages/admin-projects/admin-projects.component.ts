@@ -21,12 +21,14 @@ export class AdminProjectsComponent implements OnInit {
 
   //state
   projects: any[] = [];
+  techStacks: any[] = [];
   selectedProject: any = null;
   isSubmitting = false;
 
 
   ngOnInit(): void {
     this.loadProjects();
+    this.loadTechStacks();
   }
 
   loadProjects() {
@@ -36,6 +38,16 @@ export class AdminProjectsComponent implements OnInit {
         this.cd.detectChanges();
       },
       error: (err) => console.error('Failed to load projects', err)
+    })
+  }
+
+  loadTechStacks() {
+    this.projectService.getTechStacks().subscribe({
+      next: (res: any) => {
+        this.techStacks = res.techStacks || res;
+        this.cd.detectChanges();
+      },
+      error: (err) => console.error('Failed to load tech stacks', err)
     })
   }
 

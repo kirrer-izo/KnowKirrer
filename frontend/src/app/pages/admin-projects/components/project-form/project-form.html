@@ -27,6 +27,14 @@
                     <label class="form-label">Live Demo</label>
                     <input type="url" class="form-control" formControlName="live_demo" placeholder="https:///...">
                 </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Tech Stacks</label>
+                    <select class="form-select" formControlName="tech_stacks" multiple>
+                        <option *ngFor="let tech of techStacks" [value]="tech.id">{{tech.name}}</option>
+                    </select>
+
+                </div>
 
                 <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid || isSubmitting">
                     {{ isSubmitting ? 'Saving...' : 'Add Project' }}
