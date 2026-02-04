@@ -44,7 +44,7 @@ export class AdminProjectsComponent implements OnInit {
   loadTechStacks() {
     this.projectService.getTechStacks().subscribe({
       next: (res: any) => {
-        this.techStacks = res.techStacks || res;
+        this.techStacks = res.techStacks || res.data || res;
         this.cd.detectChanges();
       },
       error: (err) => console.error('Failed to load tech stacks', err)
@@ -53,6 +53,7 @@ export class AdminProjectsComponent implements OnInit {
 
   onEditProject(project: any) {
     this.selectedProject = project;
+    alert('Project Updated');
   }
 
   onViewProject(id: number) {
@@ -66,18 +67,19 @@ export class AdminProjectsComponent implements OnInit {
       ? this.projectService.editProject(project)
       : this.projectService.createProject(project);
 
-      obs.subscribe({
-        next: () => {
-          this.selectedProject = null;
-          this.isSubmitting = false;
-          this.loadProjects();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Failed to save project');
-          this.isSubmitting = false;
-        }
-      });
+    obs.subscribe({
+      next: () => {
+        alert('Project Created');
+        this.selectedProject = null;
+        this.isSubmitting = false;
+        this.loadProjects();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Failed to save project');
+        this.isSubmitting = false;
+      }
+    });
   }
 
   deleteProject(id: number) {

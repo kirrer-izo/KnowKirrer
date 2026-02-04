@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-project-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
 })
-export class ProjectForm {
+export class ProjectForm implements OnChanges{
   @Input() project: any = null;
   @Input() techStacks: any[] = [];
   @Input() isSubmitting = false;
@@ -16,7 +17,7 @@ export class ProjectForm {
 
   form: FormGroup;
 
-    constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
@@ -24,11 +25,13 @@ export class ProjectForm {
       goal: [''],
       source_code: ['', Validators.required],
       live_demo: [''],
-      tech_stacks: [[]]
+      tech_stack_ids: [[]]
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['techStacks']) {
+    }
     if (this.project) {
       this.form.patchValue(this.project);
     } else {
