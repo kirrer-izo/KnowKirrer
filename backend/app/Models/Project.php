@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Project extends Model
 {
@@ -17,4 +20,15 @@ class Project extends Model
         'source_code',
         'live_demo',
     ];
+
+    public function challenges(): HasMany
+    {
+        return $this->hasMany(Challenge::class);
+    }
+
+    public function techStacks(): MorphToMany
+    {
+        return $this->morphToMany(TechStack::class, 'stackable', 'tech_stackables');
+    }
+
 }
